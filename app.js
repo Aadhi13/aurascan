@@ -71,7 +71,7 @@
   let currentImageSrc = null;
   let forcedMode = 'AUTO'; // AUTO, FORCE_GAY, FORCE_STRAIGHT
   let secretTapOverride = null; // 'GAY' or 'STRAIGHT'
-  let targetKeywords = ['target', 'alex', 'friend', 'gay'];
+  let targetKeywords = ['target', 'rashmie', 'reshmie', 'resshmie'];
   let logoTapCount = 0;
   let logoTapTimer = null;
   let scanAnimationId = null;
@@ -479,7 +479,7 @@
 
     if (outcome === 'GAY') {
       playSound('result_gay');
-      
+
       if (typeof confetti === 'function') {
         const duration = 3000;
         const end = Date.now() + duration;
