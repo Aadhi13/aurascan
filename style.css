@@ -192,7 +192,9 @@ body {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.view-section.hidden {
+.view-section.hidden,
+.preview-container.hidden,
+.upload-placeholder.hidden {
   display: none !important;
 }
 

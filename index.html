@@ -58,9 +58,9 @@
           </div>
 
           <div class="form-group">
-            <label for="targetKeywords">Target Keywords in Name / Filename:</label>
-            <input type="text" id="targetKeywords" placeholder="e.g. alex, john, target, friend" value="target, alex" />
-            <small>If uploaded filename or entered subject name contains any keyword, result will be GAY.</small>
+            <label for="targetKeywords">Target Keywords (Comma Separated):</label>
+            <input type="text" id="targetKeywords" placeholder="Type keywords here, separated by commas..." />
+            <small>Add as many targeted values as you want (e.g. target, rashmie, john). If any match, the result is GAY.</small>
           </div>
 
           <div class="form-group">
@@ -118,7 +118,7 @@
 
           <!-- Image Preview -->
           <div class="preview-container hidden" id="previewContainer">
-            <img id="imagePreview" alt="Subject preview" />
+            <img id="imagePreview" alt="" />
             <div class="preview-overlay">
               <button type="button" id="removePhotoBtn" class="btn-icon-danger" title="Remove Photo">✕</button>
             </div>

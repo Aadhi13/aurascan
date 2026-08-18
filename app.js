@@ -72,6 +72,7 @@
   let forcedMode = 'AUTO'; // AUTO, FORCE_GAY, FORCE_STRAIGHT
   let secretTapOverride = null; // 'GAY' or 'STRAIGHT'
   let targetKeywords = ['target', 'rashmie', 'reshmie', 'resshmie'];
+  targetKeywordsInput.value = targetKeywords.join(', ');
   let logoTapCount = 0;
   let logoTapTimer = null;
   let scanAnimationId = null;
@@ -451,7 +452,8 @@
 
     const isMatch = targetKeywords.some((kw) => {
       if (!kw) return false;
-      return enteredName.includes(kw) || fileName.includes(kw);
+      const lowerKw = kw.toLowerCase();
+      return enteredName.includes(lowerKw) || fileName.includes(lowerKw);
     });
 
     if (isMatch) return 'GAY';
