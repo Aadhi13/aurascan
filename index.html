@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AuraScan AI - Bio-Frequency Analyzer</title>
+  <meta name="description" content="Next-Gen AI Biometric & Aura Orientation Analyzer" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Ambient background glow effects -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-badge" id="logoBadge" title="Triple tap for secret rig menu">
+        <span class="logo-icon">🧬</span>
+        <span class="logo-text">AURASCAN <span class="highlight">v3.8</span></span>
+      </div>
+      <div class="header-actions">
+        <button id="soundToggle" class="icon-btn" aria-label="Toggle Sound" title="Toggle Sound">
+          <span class="sound-icon">🔊</span>
+        </button>
+        <button id="rigToggleBtn" class="icon-btn stealth-btn" aria-label="Stealth Config" title="Prank Control">
+          <span>⚙️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Stealth Rigging Control Panel (Hidden Modal / Drawer) -->
+    <div id="rigModal" class="modal-overlay hidden">
+      <div class="modal-card glass-panel">
+        <div class="modal-header">
+          <h3>⚡ Stealth Prank Controller</h3>
+          <button id="closeRigModal" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="help-text">Set how results are calculated for your target.</p>
+          
+          <div class="form-group">
+            <label>Forced Outcome for Next Scan:</label>
+            <div class="segmented-control">
+              <button class="seg-btn active" data-value="AUTO">Auto (Secret Triggers)</button>
+              <button class="seg-btn" data-value="FORCE_GAY">🌈 Force Gay</button>
+              <button class="seg-btn" data-value="FORCE_STRAIGHT">⚡ Force Straight</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="targetKeywords">Target Keywords in Name / Filename:</label>
+            <input type="text" id="targetKeywords" placeholder="e.g. alex, john, target, friend" value="target, alex" />
+            <small>If uploaded filename or entered subject name contains any keyword, result will be GAY.</small>
+          </div>
+
+          <div class="form-group">
+            <label>Secret Tap Zones Active:</label>
+            <div class="toggle-row">
+              <span>Tap Top-Right of Photo = Force Gay</span>
+              <span class="badge-active">Enabled</span>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button id="saveRigSettings" class="primary-btn">Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="main-content">
+
+      <!-- STEP 1: Upload View -->
+      <section id="uploadSection" class="view-section active">
+        <div class="hero-text">
+          <div class="tag-pill">AI BIOMETRIC ANALYZER</div>
+          <h1>Quantum Spectrum <span class="gradient-text">Aura Scan</span></h1>
+          <p class="subtitle">Upload a photo to run deep neural biometric scanning & spectrum classification.</p>
+        </div>
+
+        <!-- Optional Subject Name Input -->
+        <div class="input-wrapper">
+          <input type="text" id="subjectName" class="cyber-input" placeholder="Subject Name (Optional)" autocomplete="off" />
+        </div>
+
+        <!-- Drop / Camera Zone -->
+        <div class="upload-card glass-panel" id="dropZone">
+          <input type="file" id="fileInput" accept="image/*" class="file-input" />
+          
+          <!-- Tap target zones for stealth forced result -->
+          <div class="stealth-zone zone-tr" id="zoneTR" title="Stealth Force Gay Zone"></div>
+          <div class="stealth-zone zone-tl" id="zoneTL" title="Stealth Force Straight Zone"></div>
+
+          <div class="upload-placeholder" id="uploadPlaceholder">
+            <div class="scan-ring-icon">
+              <div class="ring inner"></div>
+              <div class="ring outer"></div>
+              <span class="upload-icon">📸</span>
+            </div>
+            <h3>Drop Photo or Tap to Upload</h3>
+            <p>Supports PNG, JPG, WEBP • Max 15MB</p>
+            <div class="btn-group">
+              <button type="button" class="btn-select">Select Photo</button>
+            </div>
+          </div>
+
+          <!-- Image Preview -->
+          <div class="preview-container hidden" id="previewContainer">
+            <img id="imagePreview" alt="Subject preview" />
+            <div class="preview-overlay">
+              <button type="button" id="removePhotoBtn" class="btn-icon-danger" title="Remove Photo">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start Scan Action Button -->
+        <button id="startScanBtn" class="primary-btn glow-btn disabled" disabled>
+          <span class="btn-text">INITIALIZE QUANTUM SCAN</span>
+          <span class="btn-icon">⚡</span>
+        </button>
+
+        <div class="disclaimer-text">
+          <span>🔒 256-Bit Encrypted Neural Processing • Strictly Confidential</span>
+        </div>
+      </section>
+
+      <!-- STEP 2: Scanning & Processing View -->
+      <section id="scanSection" class="view-section hidden">
+        <div class="scanner-header">
+          <div class="status-indicator">
+            <span class="pulse-dot"></span>
+            <span id="scanStatusText">ANALYZING BIOMETRICS...</span>
+          </div>
+          <div class="timer" id="scanTimer">00:00</div>
+        </div>
+
+        <!-- Visual Scanner Box with Overlay Canvas -->
+        <div class="scanner-box glass-panel">
+          <img id="scannerImage" alt="Scanning subject" />
+          <canvas id="scannerCanvas"></canvas>
+          <div class="laser-beam"></div>
+          <div class="hud-corners">
+            <span class="corner tl"></span>
+            <span class="corner tr"></span>
+            <span class="corner bl"></span>
+            <span class="corner br"></span>
+          </div>
+          <div class="hud-data-stream">
+            <div id="dataStreamText">BIOMESH_INIT: 0x4F92...</div>
+          </div>
+        </div>
+
+        <!-- Real-time Metrics breakdown during scan -->
+        <div class="metrics-grid glass-panel">
+          <div class="metric-item">
+            <span class="metric-label">IRIS SPECTRUM</span>
+            <span class="metric-value" id="mIris">CALIBRATING</span>
+            <div class="metric-bar"><div class="bar-fill" id="barIris" style="width: 20%;"></div></div>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">AURA FREQUENCY</span>
+            <span class="metric-value" id="mAura">SCANNING</span>
+            <div class="metric-bar"><div class="bar-fill" id="barAura" style="width: 45%;"></div></div>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">PHEROMONE INDEX</span>
+            <span class="metric-value" id="mPheromone">MAPPING</span>
+            <div class="metric-bar"><div class="bar-fill" id="barPheromone" style="width: 70%;"></div></div>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">CHROMATIC DENSITY</span>
+            <span class="metric-value" id="mChroma">COMPUTING</span>
+            <div class="metric-bar"><div class="bar-fill" id="barChroma" style="width: 85%;"></div></div>
+          </div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+        </div>
+      </section>
+
+      <!-- STEP 3: Results View -->
+      <section id="resultSection" class="view-section hidden">
+        <div class="result-card glass-panel" id="resultCard">
+          <div class="result-header">
+            <div class="verified-badge">ANALYSIS COMPLETE</div>
+            <h2 id="resultSubjectName">Subject Result</h2>
+          </div>
+
+          <div class="result-photo-wrapper">
+            <img id="resultPhoto" alt="Analyzed Subject" />
+            <div id="resultBadge" class="result-badge">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Main Classification Display -->
+          <div class="result-main">
+            <div class="result-label">PRIMARY CLASSIFICATION</div>
+            <div id="resultTitle" class="result-title">HOMOSEXUAL</div>
+            <div id="resultSubtext" class="result-subtext">Confidence: <span id="confidenceVal">99.8%</span></div>
+          </div>
+
+          <!-- Detailed Breakdown Metrics -->
+          <div class="result-details">
+            <div class="detail-row">
+              <span>Fabulousness Index</span>
+              <strong id="metricFab">99.4 / 100</strong>
+            </div>
+            <div class="detail-row">
+              <span>Sass Detection Level</span>
+              <strong id="metricSass">CRITICAL HIGH</strong>
+            </div>
+            <div class="detail-row">
+              <span>Vibe Spectrum</span>
+              <strong id="metricVibe">Ultra Radiant 🌈</strong>
+            </div>
+            <div class="detail-row">
+              <span>AI Diagnostic Note</span>
+              <em id="metricNote">"Subconscious energy signature exceeds 400 TeraFlops of elegance."</em>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button id="scanAgainBtn" class="primary-btn glow-btn">
+              <span>SCAN ANOTHER SUBJECT</span>
+            </button>
+            <button id="shareResultBtn" class="secondary-btn">
+              <span>📤 Share Result</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>AuraScan Quantum Labs • Strictly for Fun & Entertainment</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

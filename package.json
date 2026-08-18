@@ -1,0 +1,16 @@
+{
+  "name": "aurascan",
+  "version": "3.8.0",
+  "description": "AuraScan AI Practical Joke",
+  "main": "app.js",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "prank",
+    "scanner",
+    "ai"
+  ],
+  "author": "",
+  "license": "ISC"
+}
