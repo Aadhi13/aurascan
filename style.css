@@ -891,6 +891,97 @@ h1 {
   font-size: 10px;
 }
 
+/* Keyword Tag Management */
+.keyword-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.keyword-input-row input {
+  flex: 1;
+  background: rgba(15, 18, 33, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.keyword-input-row input:focus {
+  border-color: var(--primary-neon);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+.add-keyword-btn {
+  background: linear-gradient(135deg, var(--primary-neon), var(--primary-pink));
+  border: none;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.add-keyword-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+}
+
+.add-keyword-btn:active {
+  transform: translateY(0);
+}
+
+.keyword-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+  min-height: 24px;
+}
+
+.keyword-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(168, 85, 247, 0.18);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #d8b4fe;
+  padding: 4px 8px 4px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tag-remove {
+  background: rgba(239, 68, 68, 0.5);
+  border: none;
+  color: #fff;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.tag-remove:hover {
+  background: rgba(239, 68, 68, 0.85);
+}
+
 /* Toast */
 .toast {
   position: fixed;

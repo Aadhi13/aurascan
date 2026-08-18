@@ -12,6 +12,8 @@
   const closeRigModal = document.getElementById('closeRigModal');
   const saveRigSettings = document.getElementById('saveRigSettings');
   const targetKeywordsInput = document.getElementById('targetKeywords');
+  const keywordTagsContainer = document.getElementById('keywordTags');
+  const addKeywordBtn = document.getElementById('addKeywordBtn');
   const segBtns = document.querySelectorAll('.seg-btn');
 
   // Views
@@ -72,7 +74,6 @@
   let forcedMode = 'AUTO'; // AUTO, FORCE_GAY, FORCE_STRAIGHT
   let secretTapOverride = null; // 'GAY' or 'STRAIGHT'
   let targetKeywords = ['target', 'rashmie', 'reshmie', 'resshmie'];
-  targetKeywordsInput.value = targetKeywords.join(', ');
   let logoTapCount = 0;
   let logoTapTimer = null;
   let scanAnimationId = null;
@@ -209,11 +210,58 @@
     });
   });
 
+  // Keyword Tag Management
+  function renderKeywordTags() {
+    if (!keywordTagsContainer) return;
+    keywordTagsContainer.innerHTML = '';
+    targetKeywords.forEach((kw, index) => {
+      const tag = document.createElement('span');
+      tag.className = 'keyword-tag';
+      tag.innerHTML = `${kw} <button class="tag-remove" data-index="${index}">&times;</button>`;
+      keywordTagsContainer.appendChild(tag);
+    });
+    // Attach remove handlers
+    keywordTagsContainer.querySelectorAll('.tag-remove').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.getAttribute('data-index'));
+        targetKeywords.splice(idx, 1);
+        renderKeywordTags();
+      });
+    });
+  }
+
+  // Render initial keyword tags on load
+  renderKeywordTags();
+
+  if (addKeywordBtn) {
+    addKeywordBtn.addEventListener('click', () => {
+      const val = targetKeywordsInput.value.trim().toLowerCase();
+      if (!val) return;
+      // Split by comma in case user typed multiple
+      const newKws = val.split(',').map(s => s.trim()).filter(Boolean);
+      newKws.forEach(kw => {
+        if (!targetKeywords.includes(kw)) {
+          targetKeywords.push(kw);
+        }
+      });
+      targetKeywordsInput.value = '';
+      renderKeywordTags();
+      showToast(`Added ${newKws.length} keyword(s)`);
+    });
+
+    // Also allow Enter key to add
+    targetKeywordsInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addKeywordBtn.click();
+      }
+    });
+  }
+
   saveRigSettings.addEventListener('click', () => {
-    const kw = targetKeywordsInput.value.toLowerCase().split(',').map((s) => s.trim()).filter(Boolean);
-    targetKeywords = kw;
     rigModal.classList.add('hidden');
-    showToast(`Prank Settings Saved! Mode: ${forcedMode}`);
+    showToast(`Prank Settings Saved! Mode: ${forcedMode}, ${targetKeywords.length} keywords`);
   });
 
   // File Upload Handlers
@@ -228,8 +276,7 @@
     reader.onload = (e) => {
       currentImageSrc = e.target.result;
       imagePreview.src = currentImageSrc;
-      scannerImage.src = currentImageSrc;
-      resultPhoto.src = currentImageSrc;
+      imagePreview.style.display = 'block';
 
       uploadPlaceholder.classList.add('hidden');
       previewContainer.classList.remove('hidden');
@@ -251,7 +298,8 @@
     currentFile = null;
     currentImageSrc = null;
     secretTapOverride = null;
-    imagePreview.src = '';
+    imagePreview.removeAttribute('src');
+    imagePreview.style.display = 'none';
     fileInput.value = '';
     previewContainer.classList.add('hidden');
     uploadPlaceholder.classList.remove('hidden');
@@ -301,6 +349,10 @@
   // START SCANNING PROCESS
   startScanBtn.addEventListener('click', () => {
     if (!currentImageSrc) return;
+
+    // Set scanner and result images only when scan starts
+    scannerImage.src = currentImageSrc;
+    resultPhoto.src = currentImageSrc;
 
     uploadSection.classList.add('hidden');
     scanSection.classList.remove('hidden');
@@ -458,8 +510,8 @@
 
     if (isMatch) return 'GAY';
 
-    // Default Prank Rule: Always return GAY if no explicit rule matched (or 95% gay probability for practical jokes!)
-    return 'GAY';
+    // Default: Random result when no explicit rule matched
+    return Math.random() < 0.5 ? 'GAY' : 'STRAIGHT';
   }
 
   // REVEAL RESULT VIEW

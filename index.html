@@ -58,9 +58,13 @@
           </div>
 
           <div class="form-group">
-            <label for="targetKeywords">Target Keywords (Comma Separated):</label>
-            <input type="text" id="targetKeywords" placeholder="Type keywords here, separated by commas..." />
-            <small>Add as many targeted values as you want (e.g. target, rashmie, john). If any match, the result is GAY.</small>
+            <label for="targetKeywords">Add Target Keywords:</label>
+            <div class="keyword-input-row">
+              <input type="text" id="targetKeywords" placeholder="Type a name and press Add..." />
+              <button type="button" id="addKeywordBtn" class="add-keyword-btn">+ Add</button>
+            </div>
+            <div id="keywordTags" class="keyword-tags-container"></div>
+            <small>Names that trigger GAY result. Type one or more (comma-separated) and tap Add.</small>
           </div>
 
           <div class="form-group">
@@ -118,7 +122,7 @@
 
           <!-- Image Preview -->
           <div class="preview-container hidden" id="previewContainer">
-            <img id="imagePreview" alt="" />
+            <img id="imagePreview" alt="" style="display:none" />
             <div class="preview-overlay">
               <button type="button" id="removePhotoBtn" class="btn-icon-danger" title="Remove Photo">✕</button>
             </div>
