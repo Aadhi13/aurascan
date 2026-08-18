@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,9 +9,12 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <!-- Ambient background glow effects -->
   <div class="bg-glow bg-glow-1"></div>
@@ -43,7 +47,7 @@
         </div>
         <div class="modal-body">
           <p class="help-text">Set how results are calculated for your target.</p>
-          
+
           <div class="form-group">
             <label>Forced Outcome for Next Scan:</label>
             <div class="segmented-control">
@@ -87,13 +91,14 @@
 
         <!-- Optional Subject Name Input -->
         <div class="input-wrapper">
-          <input type="text" id="subjectName" class="cyber-input" placeholder="Subject Name (Optional)" autocomplete="off" />
+          <input type="text" id="subjectName" class="cyber-input" placeholder="Subject Name (Optional)"
+            autocomplete="off" />
         </div>
 
         <!-- Drop / Camera Zone -->
         <div class="upload-card glass-panel" id="dropZone">
           <input type="file" id="fileInput" accept="image/*" class="file-input" />
-          
+
           <!-- Tap target zones for stealth forced result -->
           <div class="stealth-zone zone-tr" id="zoneTR" title="Stealth Force Gay Zone"></div>
           <div class="stealth-zone zone-tl" id="zoneTL" title="Stealth Force Straight Zone"></div>
@@ -162,22 +167,30 @@
           <div class="metric-item">
             <span class="metric-label">IRIS SPECTRUM</span>
             <span class="metric-value" id="mIris">CALIBRATING</span>
-            <div class="metric-bar"><div class="bar-fill" id="barIris" style="width: 20%;"></div></div>
+            <div class="metric-bar">
+              <div class="bar-fill" id="barIris" style="width: 20%;"></div>
+            </div>
           </div>
           <div class="metric-item">
             <span class="metric-label">AURA FREQUENCY</span>
             <span class="metric-value" id="mAura">SCANNING</span>
-            <div class="metric-bar"><div class="bar-fill" id="barAura" style="width: 45%;"></div></div>
+            <div class="metric-bar">
+              <div class="bar-fill" id="barAura" style="width: 45%;"></div>
+            </div>
           </div>
           <div class="metric-item">
             <span class="metric-label">PHEROMONE INDEX</span>
             <span class="metric-value" id="mPheromone">MAPPING</span>
-            <div class="metric-bar"><div class="bar-fill" id="barPheromone" style="width: 70%;"></div></div>
+            <div class="metric-bar">
+              <div class="bar-fill" id="barPheromone" style="width: 70%;"></div>
+            </div>
           </div>
           <div class="metric-item">
             <span class="metric-label">CHROMATIC DENSITY</span>
             <span class="metric-value" id="mChroma">COMPUTING</span>
-            <div class="metric-bar"><div class="bar-fill" id="barChroma" style="width: 85%;"></div></div>
+            <div class="metric-bar">
+              <div class="bar-fill" id="barChroma" style="width: 85%;"></div>
+            </div>
           </div>
         </div>
 
@@ -238,7 +251,6 @@
           </div>
         </div>
       </section>
-
     </main>
 
     <!-- Footer -->
@@ -250,6 +262,9 @@
   <!-- Toast Notification -->
   <div id="toast" class="toast hidden"></div>
 
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>

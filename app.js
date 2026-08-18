@@ -479,6 +479,31 @@
 
     if (outcome === 'GAY') {
       playSound('result_gay');
+      
+      if (typeof confetti === 'function') {
+        const duration = 3000;
+        const end = Date.now() + duration;
+        (function frame() {
+          confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3']
+          });
+          confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3']
+          });
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        }());
+      }
+
       resultBadge.innerHTML = '🌈';
       resultTitle.textContent = '100% GAY';
       resultTitle.className = 'result-title gay-result';
